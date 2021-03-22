@@ -915,18 +915,23 @@ class _SwitchPainter extends ToggleablePainter {
     // Paint the track
     final Paint paint = Paint()
       ..color = trackColor;
+
     const double trackHorizontalPadding = kRadialReactionRadius - _kTrackRadius;
+    const double trackWidth = _kSwitchWidth - 2.0 * trackHorizontalPadding;
+    const double radiusAdditionalOffset = _kTrackRadius / 2;
+    final double parentWidthOffset = size.width / 2 - trackWidth + radiusAdditionalOffset;
+
     final Rect trackRect = Rect.fromLTWH(
-      trackHorizontalPadding,
+      trackHorizontalPadding + parentWidthOffset,
       (size.height - _kTrackHeight) / 2.0,
-      size.width - 2.0 * trackHorizontalPadding,
+      trackWidth,
       _kTrackHeight,
     );
     final RRect trackRRect = RRect.fromRectAndRadius(trackRect, const Radius.circular(_kTrackRadius));
     canvas.drawRRect(trackRRect, paint);
 
     final Offset thumbPosition = Offset(
-      kRadialReactionRadius + visualPosition * trackInnerLength,
+      kRadialReactionRadius + visualPosition * trackInnerLength + parentWidthOffset,
       size.height / 2.0,
     );
 
